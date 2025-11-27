@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection System | Medical Analysis</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <div class="logo-icon"></div>
+                <span class="brand-text">Breast Cancer Detection</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Medical Analysis System</h1>
+                <p class="subtitle">AI-powered breast cancer detection for clinical assessment</p>
+            </div>
+
+            <div class="analysis-card">
+                <form action="/predict" method="post" id="predictionForm">
+                    <div class="form-group">
+                        <label for="featureInput" class="form-label">
+                            Medical Features Input
+                        </label>
+                        <input
+                            type="text"
+                            name="feature"
+                            class="form-control"
+                            id="featureInput"
+                            placeholder="Enter comma-separated values (e.g., 1.0, 2.5, 3.2, ...)"
+                            required
+                            autocomplete="off"
+                        />
+                        <div class="form-help">
+                            Enter all medical breast cancer features as comma-separated numerical values.
+                        </div>
+                    </div>
+
+                    <div class="info-notice">
+                        <strong>Important:</strong> This tool uses machine learning to analyze medical data. 
+                        Results should be interpreted by qualified healthcare professionals.
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span class="btn-text">Analyze Results</span>
+                    </button>
+                </form>
+
+                {% if message %}
+                <div class="result-container {% if message == 'Cancer Detected' %}result-malignant{% else %}result-benign{% endif %}" id="resultBox">
+                    <div class="result-header">
+                        <div class="result-icon"></div>
+                        <h2 class="result-title">
+                            {% if message == 'Cancer Detected' %}
+                                Malignant Tumor Detected
+                            {% else %}
+                                Benign Tumor Detected
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <div class="result-body">
+                        <p class="result-text">
+                            {% if message == 'Cancer Detected' %}
+                                The analysis indicates a malignant tumor. <strong>Immediate medical consultation is strongly recommended.</strong> 
+                                Please consult with your healthcare provider for further evaluation and treatment options.
+                            {% else %}
+                                The analysis indicates a benign tumor. While this is generally positive news, 
+                                <strong>continue with routine medical checkups</strong> as recommended by your healthcare provider.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-disclaimer">
+                    <strong>Disclaimer:</strong> This system is designed to assist healthcare professionals and should not replace clinical judgment. 
+                    All results require professional medical interpretation.
+                </p>
+                <p class="footer-copyright">
+                    &copy; 2024 Breast Cancer Detection System. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
